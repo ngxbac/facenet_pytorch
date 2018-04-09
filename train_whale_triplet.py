@@ -152,7 +152,10 @@ l2_dist = PairwiseDistance(2)
 
 transform = transforms.Compose([
                          # Scale(96),
-                         transforms.Resize(config.sz),
+                         transforms.Resize((config.sz, config.sz)),
+                         transforms.RandomHorizontalFlip(),
+                         transforms.ColorJitter(),
+                         transforms.RandomRotation(15),
                          transforms.ToTensor(),
                          transforms.Normalize(mean = [ 0.5, 0.5, 0.5 ],
                                                std = [ 0.5, 0.5, 0.5 ])
