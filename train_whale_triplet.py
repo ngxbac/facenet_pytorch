@@ -11,7 +11,7 @@ import torch.backends.cudnn as cudnn
 import os
 import numpy as np
 from tqdm import tqdm
-from models import TripletWhaleModel
+from model import TripletWhaleModel
 from eval_metrics import evaluate
 from Logger import Logger
 # from TripletFaceDataset import TripletFaceDataset
