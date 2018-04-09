@@ -13,7 +13,7 @@ import numpy as np
 from tqdm import tqdm
 from model import TripletWhaleModel
 from eval_metrics import evaluate
-from Logger import Logger
+from logger import Logger
 # from TripletFaceDataset import TripletFaceDataset
 from TripletWhaleDataset import TripletWhaleDataset
 # from LFWDataset import LFWDataset
