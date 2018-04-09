@@ -165,16 +165,15 @@ train_dir = TripletWhaleDataset(dir=config.dataroot,n_triplets=config.n_triplets
 train_loader = torch.utils.data.DataLoader(train_dir,
     batch_size=config.bs, shuffle=False, **kwargs)
 
-# test_loader = torch.utils.data.DataLoader(
-#     LFWDataset(dir=args.lfw_dir,pairs_path=args.lfw_pairs_path,
-#                      transform=transform),
-#     batch_size=args.batch_size, shuffle=False, **kwargs)
+test_loader = torch.utils.data.DataLoader(
+    TripletWhaleDataset(dir=args.dataroot,n_triplets=config.n_triplets//10,transform=transform),
+    batch_size=config.bs, shuffle=False, **kwargs)
 
 
 
 def main():
     # Views the training images and displays the distance on anchor-negative and anchor-positive
-    test_display_triplet_distance = True
+    test_display_triplet_distance = False
 
     # print the experiment configuration
     # print('\nparsed options:\n{}\n'.format(vars(args)))
@@ -290,7 +289,7 @@ def train(train_loader, model, optimizer, epoch):
         labels.append(np.ones(dists.size(0)))
 
     labels = np.array([sublabel for label in labels for sublabel in label])
-    distances = np.array([subdist[0] for dist in distances for subdist in dist])
+    distances = np.array([subdist for dist in distances for subdist in dist])
 
     tpr, fpr, accuracy, val, val_std, far = evaluate(distances,labels)
     print('\33[91mTrain set: Accuracy: {:.8f}\n\33[0m'.format(np.mean(accuracy)))
@@ -328,7 +327,7 @@ def test(test_loader, model, epoch):
                 100. * batch_idx / len(test_loader)))
 
     labels = np.array([sublabel for label in labels for sublabel in label])
-    distances = np.array([subdist[0] for dist in distances for subdist in dist])
+    distances = np.array([subdist for dist in distances for subdist in dist])
 
     tpr, fpr, accuracy, val, val_std, far = evaluate(distances,labels)
     print('\33[91mTest set: Accuracy: {:.8f}\n\33[0m'.format(np.mean(accuracy)))
